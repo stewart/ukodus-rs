@@ -1,4 +1,4 @@
-use std::fmt::{self, Formatter, Display};
+use std::fmt::{self, Formatter, Debug, Display};
 
 use itertools::Itertools;
 
@@ -150,6 +150,19 @@ impl Puzzle {
 
         self.cols().iter_mut().all(&validate) &&
         self.boxes().iter_mut().all(&validate)
+    }
+}
+
+impl Debug for Puzzle {
+    fn fmt(&self, formatter: &mut Formatter) -> fmt::Result {
+        write!(formatter, "Puzzle").unwrap();
+        self.0[..].fmt(formatter)
+    }
+}
+
+impl PartialEq for Puzzle {
+    fn eq(&self, other: &Puzzle) -> bool {
+        self.0[..] == other.0[..]
     }
 }
 
