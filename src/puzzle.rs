@@ -14,7 +14,7 @@ const BOXES: [[usize; 9]; 9] = [
     [60, 61, 62, 69, 70, 71, 78, 79, 80],
 ];
 
-pub struct Puzzle([u8; 81]);
+pub struct Puzzle(pub [u8; 81]);
 
 impl Puzzle {
     /// Creates a new Puzzle from the provided array
