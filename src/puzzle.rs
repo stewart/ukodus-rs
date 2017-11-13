@@ -155,7 +155,7 @@ impl Puzzle {
 
 impl Debug for Puzzle {
     fn fmt(&self, formatter: &mut Formatter) -> fmt::Result {
-        write!(formatter, "Puzzle").unwrap();
+        write!(formatter, "Puzzle")?;
         self.0[..].fmt(formatter)
     }
 }
@@ -168,7 +168,7 @@ impl PartialEq for Puzzle {
 
 impl Display for Puzzle {
     fn fmt(&self, f: &mut Formatter) -> fmt::Result {
-        write!(f, "Score: {}\n", 81 - self.count());
+        write!(f, "Score: {}\n", 81 - self.count())?;
 
         let divider = "+-------+-------+-------+\n";
 
