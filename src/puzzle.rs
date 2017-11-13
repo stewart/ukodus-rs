@@ -124,6 +124,19 @@ impl Puzzle {
         gaps
     }
 
+    /// Returns a vector of tuples indicating where values are in the Puzzle
+    pub fn filled(&self) -> Vec<(usize, usize)> {
+        let mut filled = vec![];
+
+        for (idx, val) in self.0.iter().enumerate() {
+            if val != &0 {
+                filled.push((idx % SIZE, idx / SIZE))
+            }
+        }
+
+        filled
+    }
+
     /// Checks if the Puzzle is valid
     pub fn is_valid(&self) -> bool {
         if self.0.contains(&0) {
