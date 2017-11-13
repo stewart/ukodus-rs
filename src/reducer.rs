@@ -1,53 +1,40 @@
 use puzzle::Puzzle;
 use rand::{thread_rng, Rng};
 
+type Coordinates = (usize, usize);
+
 pub fn reduce(puzzle: &Puzzle, iterations: usize) -> Puzzle {
-    let simple = simple(puzzle.clone());
+    let mut puzzles = vec![];
 
-    let rand = (0..iterations).
-        map(|_| rand_simple(puzzle.clone())).
-        max_by_key(|puzzle| puzzle.score()).
-        unwrap();
+    puzzles.push(simple_reducer(puzzle.clone(), puzzle.filled()));
 
-    if simple.score() > rand.score() {
-        return simple;
-    } else {
-        return rand;
+    for _ in 0..iterations {
+        puzzles.push(simple_reducer(puzzle.clone(), random_filled(&puzzle)));
     }
+
+    puzzles.into_iter().max_by_key(|puzzle| puzzle.score()).unwrap()
 }
 
-fn simple(mut puzzle: Puzzle) -> Puzzle {
-    for (x, y) in puzzle.filled() {
-        let current = puzzle.get(x, y);
-        puzzle.set(x, y, 0);
+// Given a Puzzle and a Vec of coordinates (col, row), attempts to remove as
+// many cells as possible, while ensuring the Puzzle is still solvable.
+fn simple_reducer(mut puzzle: Puzzle, cells: Vec<Coordinates>) -> Puzzle {
+    for (col, row) in cells {
+        let current = puzzle.get(col, row);
+        puzzle.set(col, row, 0);
 
-        let possibilities = puzzle.possibilities_for(x, y).unwrap().len();
+        let possibilities = puzzle.possibilities_for(col, row).unwrap().len();
 
         if possibilities != 1 {
-            puzzle.set(x, y, current);
+            puzzle.set(col, row, current);
         }
     }
 
     puzzle
 }
 
-fn rand_simple(mut puzzle: Puzzle) -> Puzzle {
+fn random_filled(puzzle: &Puzzle) -> Vec<Coordinates> {
     let mut rng = thread_rng();
-
     let mut filled = puzzle.filled();
-    let filled = filled.as_mut_slice();
-    rng.shuffle(filled);
-
-    for &mut (x, y) in filled {
-        let current = puzzle.get(x, y);
-        puzzle.set(x, y, 0);
-
-        let possibilities = puzzle.possibilities_for(x, y).unwrap().len();
-
-        if possibilities != 1 {
-            puzzle.set(x, y, current);
-        }
-    }
-
-    puzzle
+    rng.shuffle(&mut filled);
+    filled
 }
