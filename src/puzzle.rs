@@ -92,6 +92,11 @@ impl Puzzle {
         self.0.iter().filter(|&i| i != &0).count()
     }
 
+    /// Calculates the 'score' of the Puzzle, i.e. how many spots are unfilled
+    pub fn score(&self) -> usize {
+        self.0.iter().filter(|&i| i == &0).count()
+    }
+
     /// Returns all possible values for the given cell coordinates
     pub fn possibilities_for(&self, column: usize, row: usize) -> Option<Vec<u8>> {
         if self.get(column, row) != 0 {
@@ -181,7 +186,7 @@ impl PartialEq for Puzzle {
 
 impl Display for Puzzle {
     fn fmt(&self, f: &mut Formatter) -> fmt::Result {
-        write!(f, "Score: {}\n", 81 - self.count())?;
+        write!(f, "Score: {}\n", self.score())?;
 
         let divider = "+-------+-------+-------+\n";
 

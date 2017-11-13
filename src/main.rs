@@ -3,17 +3,16 @@ extern crate ukodus;
 use ukodus::{PROBLEMS, reduce};
 
 fn main() {
+    let iterations = iterations();
     for problem in PROBLEMS.iter_mut() {
-        reduce(problem);
+        let problem = reduce(problem, iterations);
         println!("{}", problem);
     }
-
-    println!("{}", iterations());
 }
 
-fn iterations() -> u32 {
+fn iterations() -> usize {
     std::env::var("ITERATIONS").
         unwrap_or(String::from("1000")).
-        parse::<u32>().
+        parse::<usize>().
         unwrap_or(1000)
 }
