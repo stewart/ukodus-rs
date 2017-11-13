@@ -14,6 +14,7 @@ const BOXES: [[usize; 9]; 9] = [
     [60, 61, 62, 69, 70, 71, 78, 79, 80],
 ];
 
+#[derive(Clone)]
 pub struct Puzzle(pub [u8; 81]);
 
 impl Puzzle {
@@ -30,14 +31,11 @@ impl Puzzle {
     }
 
     /// Returns a new Puzzle with the specified cell set to the provided value
-    pub fn set(&self, column: usize, row: usize, value: u8) -> Puzzle {
+    pub fn set(&mut self, column: usize, row: usize, value: u8) {
         debug_assert!(column < 9);
         debug_assert!(row < 9);
         debug_assert!(value <= 9);
-
-        let mut new_arr = (*self).0;
-        new_arr[row * SIZE + column] = value;
-        Puzzle(new_arr)
+        self.0[row * SIZE + column] = value;
     }
 
     /// Returns all rows in the Puzzle
