@@ -213,7 +213,8 @@ mod tests {
     fn test_set() {
         assert_eq!(FILLED.get(0, 0), 8);
 
-        let updated = FILLED.set(0, 0, 1);
+        let mut updated = FILLED.clone();
+        updated.set(0, 0, 1);
 
         assert_eq!(FILLED.get(0, 0), 8);
         assert_eq!(updated.get(0, 0), 1);
@@ -342,7 +343,8 @@ mod tests {
         assert!(FILLED.is_valid());
         assert!(!INCOMPLETE.is_valid());
 
-        let with_dup = FILLED.set(0, 0, 1);
+        let mut with_dup = FILLED.clone();
+        with_dup.set(0, 0, 1);
         assert!(!with_dup.is_valid());
     }
 }
