@@ -2,6 +2,7 @@ extern crate itertools;
 
 mod puzzle;
 mod problems;
+mod solver;
 
 use problems::PROBLEMS;
 
