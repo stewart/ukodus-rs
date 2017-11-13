@@ -1,3 +1,5 @@
+use std::fmt::{self, Formatter, Display};
+
 use itertools::Itertools;
 
 const SIZE: usize = 9;
@@ -148,6 +150,26 @@ impl Puzzle {
 
         self.cols().iter_mut().all(&validate) &&
         self.boxes().iter_mut().all(&validate)
+    }
+}
+
+impl Display for Puzzle {
+    fn fmt(&self, f: &mut Formatter) -> fmt::Result {
+        write!(f, "Score: {}\n", 81 - self.count());
+
+        let divider = "+-------+-------+-------+\n";
+
+        let rows = self.rows().iter().map(|row| {
+            let row = row.iter().
+                map(|v| if v == &0 { String::from(" ") } else { v.to_string() }).
+                collect::<Vec<String>>();
+
+            row.chunks(3).map(|chunk| chunk.join(" ")).join(" | ")
+        }).map(|row| format!("| {} |\n", row)).collect::<Vec<String>>();
+
+        let rows = rows.chunks(3).map(|chunk| chunk.join("")).join(divider);
+
+        write!(f, "{}{}{}", divider, rows, divider)
     }
 }
 
