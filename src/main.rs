@@ -3,6 +3,10 @@ extern crate itertools;
 mod puzzle;
 mod problems;
 
+use problems::PROBLEMS;
+
 fn main() {
-    println!("Hello, world!");
+    for problem in PROBLEMS.iter() {
+        println!("{}", problem);
+    }
 }
