@@ -1,10 +1,6 @@
-extern crate itertools;
+extern crate ukodus;
 
-mod puzzle;
-mod problems;
-mod solver;
-
-use problems::PROBLEMS;
+use ukodus::{PROBLEMS};
 
 fn main() {
     for problem in PROBLEMS.iter() {
