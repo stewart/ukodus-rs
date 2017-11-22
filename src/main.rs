@@ -1,8 +1,6 @@
 extern crate ukodus;
-extern crate rayon;
 
 use ukodus::{PROBLEMS, Reducer};
-use rayon::prelude::*;
 
 fn main() {
     let iterations = iterations();
