@@ -1,14 +1,18 @@
 extern crate ukodus;
+extern crate rayon;
 
 use ukodus::{PROBLEMS, Reducer};
+use rayon::prelude::*;
 
 fn main() {
     let iterations = iterations();
 
-    for problem in PROBLEMS.into_iter() {
-        let reduced = Reducer::new(problem.clone()).reduce(iterations);
-        println!("{}", reduced);
-    }
+    PROBLEMS.
+        into_par_iter().
+        for_each(|problem| {
+            let reduced = Reducer::new(problem.clone()).reduce(iterations);
+            println!("{}", reduced);
+        });
 }
 
 fn iterations() -> usize {
