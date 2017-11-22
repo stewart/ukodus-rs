@@ -1,11 +1,9 @@
 extern crate ukodus;
 
-use ukodus::{PROBLEMS, reduce};
+use ukodus::{PROBLEMS};
 
 fn main() {
-    let iterations = iterations();
     for problem in PROBLEMS.iter_mut() {
-        let problem = reduce(problem, iterations);
         println!("{}", problem);
     }
 }
