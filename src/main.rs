@@ -7,12 +7,15 @@ use rayon::prelude::*;
 fn main() {
     let iterations = iterations();
 
-    PROBLEMS.
-        into_par_iter().
-        for_each(|problem| {
-            let reduced = Reducer::new(problem.clone()).reduce(iterations);
-            println!("{}", reduced);
-        });
+    let score = PROBLEMS.
+        into_iter().
+        map(|problem| {
+            let problem = Reducer::new(problem.clone()).reduce(iterations);
+            println!("{}", problem);
+            problem.score()
+        }).sum::<usize>();
+
+    println!("Final Score: {}", score);
 }
 
 fn iterations() -> usize {

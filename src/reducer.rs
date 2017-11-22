@@ -2,6 +2,8 @@ use puzzle::Puzzle;
 use solver::Solver;
 use rand::{thread_rng, Rng};
 
+use rayon::prelude::*;
+
 pub struct Reducer {
     puzzle: Puzzle,
 }
@@ -15,11 +17,13 @@ impl Reducer {
         let filled = self.puzzle.filled();
         let mut rng = thread_rng();
 
-        (0..iterations).map(|_| {
+        let iterations = (0..iterations).map(|_| {
             let mut filled = filled.clone();
             rng.shuffle(&mut filled);
             filled
-        }).map(|filled| {
+        }).collect::<Vec<_>>();
+
+        iterations.into_par_iter().map(|filled| {
             let mut best = self.puzzle.clone();
 
             for (x, y) in filled {

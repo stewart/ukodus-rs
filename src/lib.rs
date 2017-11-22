@@ -1,5 +1,6 @@
 extern crate itertools;
 extern crate rand;
+extern crate rayon;
 
 mod puzzle;
 mod problems;
