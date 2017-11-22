@@ -1,10 +1,13 @@
 extern crate ukodus;
 
-use ukodus::{PROBLEMS};
+use ukodus::{PROBLEMS, Reducer};
 
 fn main() {
-    for problem in PROBLEMS.iter_mut() {
-        println!("{}", problem);
+    let iterations = iterations();
+
+    for problem in PROBLEMS.into_iter() {
+        let reduced = Reducer::new(problem.clone()).reduce(iterations);
+        println!("{}", reduced);
     }
 }
 
