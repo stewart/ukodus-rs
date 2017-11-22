@@ -2,7 +2,7 @@
 extern crate ukodus;
 extern crate test;
 
-use ukodus::{Puzzle, solve};
+use ukodus::{Puzzle, Solver};
 use test::Bencher;
 
 #[bench]
@@ -20,7 +20,7 @@ fn bench_solve_easy(b: &mut Bencher) {
             6, 8, 1, 7, 5, 3, 9, 2, 4
         ]);
 
-        solve(sudoku)
+        Solver::new(sudoku).solve()
     })
 }
 
@@ -39,6 +39,6 @@ fn bench_solve_hard(b: &mut Bencher) {
             0, 0, 0, 0, 7, 0, 0, 3, 0
         ]);
 
-        solve(sudoku)
+        Solver::new(sudoku).solve()
     })
 }
